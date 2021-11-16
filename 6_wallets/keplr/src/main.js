@@ -91,6 +91,9 @@ window.onload = async () => {
                     },
                 );
                 this.account = await this.cosmJS.getAccount(this.address);
+                
+                console.log('here');
+                console.log(await this.cosmJS.queryContractSmart("secret14n53vq5d9f43ssv80gzqhnm60jyd2xqm8vhyt4", { "config_get": {} }));
             } catch (error) {
                 console.error(error)
             }
