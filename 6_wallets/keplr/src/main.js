@@ -1,7 +1,8 @@
 const { SigningCosmWasmClient } = require('secretjs');
 
 window.onload = async () => {
-    this.chainId = 'holodeck-2';
+    this.chainId = 'secret-4';
+    this.lcd = 'https://secret-4--lcd--full.datahub.figment.io/apikey/28f8f960e965f32823813e3788d55b58';
 
     // Keplr extension injects the offline signer that is compatible with cosmJS.
     // You can get this offline signer from `window.getOfflineSigner(chainId:string)` after load event.
@@ -19,49 +20,49 @@ window.onload = async () => {
                 // If the user approves, the chain will be added to the user's Keplr extension.
                 // If the user rejects it or the suggested chain information doesn't include the required fields, it will throw an error.
                 // If the same chain id is already registered, it will resolve and not require the user interactions.
-                await window.keplr.experimentalSuggestChain({
-                    chainId: this.chainId,
-                    chainName: 'Secret Testnet',
-                    rpc: 'http://chainofsecrets.secrettestnet.io:26657',
-                    rest: 'https://chainofsecrets.secrettestnet.io',
-                    bip44: {
-                        coinType: 529,
-                    },
-                    coinType: 529,
-                    stakeCurrency: {
-                        coinDenom: 'SCRT',
-                        coinMinimalDenom: 'uscrt',
-                        coinDecimals: 6,
-                    },
-                    bech32Config: {
-                        bech32PrefixAccAddr: 'secret',
-                        bech32PrefixAccPub: 'secretpub',
-                        bech32PrefixValAddr: 'secretvaloper',
-                        bech32PrefixValPub: 'secretvaloperpub',
-                        bech32PrefixConsAddr: 'secretvalcons',
-                        bech32PrefixConsPub: 'secretvalconspub',
-                    },
-                    currencies: [
-                        {
-                            coinDenom: 'SCRT',
-                            coinMinimalDenom: 'uscrt',
-                            coinDecimals: 6,
-                        },
-                    ],
-                    feeCurrencies: [
-                        {
-                            coinDenom: 'SCRT',
-                            coinMinimalDenom: 'uscrt',
-                            coinDecimals: 6,
-                        },
-                    ],
-                    gasPriceStep: {
-                        low: 0.1,
-                        average: 0.25,
-                        high: 0.4,
-                    },
-                    features: ['secretwasm'],
-                });
+                // await window.keplr.experimentalSuggestChain({
+                //     chainId: this.chainId,
+                //     chainName: 'Secret Testnet',
+                //     rpc: 'http://chainofsecrets.secrettestnet.io:26657',
+                //     rest: 'https://chainofsecrets.secrettestnet.io',
+                //     bip44: {
+                //         coinType: 529,
+                //     },
+                //     coinType: 529,
+                //     stakeCurrency: {
+                //         coinDenom: 'SCRT',
+                //         coinMinimalDenom: 'uscrt',
+                //         coinDecimals: 6,
+                //     },
+                //     bech32Config: {
+                //         bech32PrefixAccAddr: 'secret',
+                //         bech32PrefixAccPub: 'secretpub',
+                //         bech32PrefixValAddr: 'secretvaloper',
+                //         bech32PrefixValPub: 'secretvaloperpub',
+                //         bech32PrefixConsAddr: 'secretvalcons',
+                //         bech32PrefixConsPub: 'secretvalconspub',
+                //     },
+                //     currencies: [
+                //         {
+                //             coinDenom: 'SCRT',
+                //             coinMinimalDenom: 'uscrt',
+                //             coinDecimals: 6,
+                //         },
+                //     ],
+                //     feeCurrencies: [
+                //         {
+                //             coinDenom: 'SCRT',
+                //             coinMinimalDenom: 'uscrt',
+                //             coinDecimals: 6,
+                //         },
+                //     ],
+                //     gasPriceStep: {
+                //         low: 0.1,
+                //         average: 0.25,
+                //         high: 0.4,
+                //     },
+                //     features: ['secretwasm'],
+                // });
 
                 // This method will ask the user whether or not to allow access if they haven't visited this website.
                 // Also, it will request user to unlock the wallet if the wallet is locked.
@@ -75,7 +76,7 @@ window.onload = async () => {
                 this.address = accounts[0].address;
 
                 this.cosmJS = new SigningCosmWasmClient(
-                    'https://chainofsecrets.secrettestnet.io/',
+                    this.lcd,
                     this.address,
                     keplrOfflineSigner,
                     window.getEnigmaUtils(this.chainId),
@@ -93,7 +94,8 @@ window.onload = async () => {
                 this.account = await this.cosmJS.getAccount(this.address);
                 
                 console.log('here');
-                console.log(await this.cosmJS.queryContractSmart("secret14n53vq5d9f43ssv80gzqhnm60jyd2xqm8vhyt4", { "config_get": {} }));
+                // console.log(await this.cosmJS.queryContractSmart("secret1js7z7evp68pehxazpclydnwj79cxx9c0zt4dgc", { "config_get": {} }));
+                // console.log(await this.cosmJS.execute("secret1js7z7evp68pehxazpclydnwj79cxx9c0zt4dgc", { "config_get": {} }));
             } catch (error) {
                 console.error(error)
             }
